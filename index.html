@@ -1,223 +1,344 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>杭州三天两晚旅游指南</title>
+    <title>北京咖啡馆推荐</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #6f4e37;
+            --secondary-color: #f5f5dc;
+            --accent-color: #d4a76a;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
             color: #333;
-            background-color: #f5f5f5;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #8b5a2b);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 20px;
         }
 
-        header {
-            text-align: center;
-            padding: 60px 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://pics.lvjs.com.cn/pics//uploads/pc/place2/2017-09-19/0c12016f-0b71-41d3-ade2-7c5925ecf667.jpg');
+        .cafe-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            background-color: white;
+            height: 100%;
+        }
+
+        .cafe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cafe-image {
+            height: 200px;
             background-size: cover;
             background-position: center;
+        }
+
+        .cafe-content {
+            padding: 1.5rem;
+        }
+
+        .cafe-name {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .cafe-rating {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+
+        .cafe-info {
+            margin-bottom: 0.5rem;
+        }
+
+        .cafe-info i {
+            color: var(--primary-color);
+            width: 20px;
+            margin-right: 8px;
+        }
+
+        .cafe-feature {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50px;
+            padding: 0.3rem 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+
+        .map-container {
+            height: 400px;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+
+        .travel-info {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .travel-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .travel-info ul {
+            padding-left: 1.5rem;
+        }
+
+        .travel-info li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
             color: white;
-            margin-bottom: 40px;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
         }
 
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
+        .footer p {
+            margin-bottom: 0;
         }
 
-        .day-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem 0;
+            }
 
-        .day-title {
-            color: #1a73e8;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 50px;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 30px;
-        }
-
-        .timeline-item::before {
-            content: "";
-            position: absolute;
-            left: -33px;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #1a73e8;
-        }
-
-        .timeline-item::after {
-            content: "";
-            position: absolute;
-            left: -26px;
-            top: 16px;
-            width: 2px;
-            height: calc(100% - 16px);
-            background: #1a73e8;
-        }
-
-        .timeline-item:last-child::after {
-            display: none;
-        }
-
-        .spot-name {
-            font-size: 1.4em;
-            color: #1a73e8;
-            margin-bottom: 10px;
-        }
-
-        .spot-desc {
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .tips {
-            background: #e8f0fe;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 40px;
-        }
-
-        .tips h3 {
-            color: #1a73e8;
-            margin-bottom: 15px;
-        }
-
-        .tips ul {
-            list-style-position: inside;
-        }
-
-        .tips li {
-            margin-bottom: 10px;
+            .cafe-image {
+                height: 150px;
+            }
         }
     </style>
+    <meta name="code-type" content="html">
 </head>
+
 <body>
-    <header>
-        <h1>杭州三天两晚完美旅游指南</h1>
-        <p>体验人间天堂，邂逅最美杭州</p>
-    </header>
-
-    <div class="container">
-        <div class="day-card">
-            <h2 class="day-title">第一天：西湖文化精华游</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="spot-name">上午：西湖风景区</div>
-                    <div class="spot-desc">
-                        从苏堤春晓开始，漫步西湖边，欣赏湖光山色。途经平湖秋月、断桥残雪等经典景点。
-                        建议租赁自行车环湖，感受不一样的西湖风光。
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="spot-name">中午：龙井村用餐</div>
-                    <div class="spot-desc">
-                        在龙井村品尝农家菜，推荐龙井虾仁、西湖醋鱼等杭帮菜。
-                        午餐后可以参观龙井茶园，了解龙井茶文化。
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="spot-name">下午：灵隐寺 - 飞来峰</div>
-                    <div class="spot-desc">
-                        参观千年古刹灵隐寺，欣赏飞来峰石刻，感受佛教文化的深厚底蕴。
-                        傍晚可以在北山路欣赏落日余晖。
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="day-card">
-            <h2 class="day-title">第二天：城市文化探索</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="spot-name">上午：河坊街</div>
-                    <div class="spot-desc">
-                        漫步南宋御街，感受老杭州的市井生活。
-                        品尝地道小吃，购买特色手工艺品。
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="spot-name">下午：宋城景区</div>
-                    <div class="spot-desc">
-                        体验南宋风情，观看《宋城千古情》演出。
-                        参与互动体验项目，了解杭州历史文化。
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="spot-name">晚上：西湖音乐喷泉</div>
-                    <div class="spot-desc">
-                        欣赏西湖音乐喷泉表演，体验浪漫夜景。
-                        可以在湖滨步行街享受夜生活。
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="day-card">
-            <h2 class="day-title">第三天：自然与休闲</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="spot-name">上午：太子湾公园</div>
-                    <div class="spot-desc">
-                        欣赏郁金香等季节性花卉，拍摄美照。
-                        漫步公园，享受清晨时光。
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="spot-name">中午：西湖区美食探索</div>
-                    <div class="spot-desc">
-                        品尝杭州特色美食，如叫化鸡、东坡肉等。
-                        建议在知味观或楼外楼等老字号用餐。
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="spot-name">下午：雷峰塔</div>
-                    <div class="spot-desc">
-                        登塔远眺西湖全景，了解白蛇传传说。
-                        欣赏塔内文物展览。
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="tips">
-            <h3>实用贴士</h3>
-            <ul>
-                <li>最佳旅游季节：3-5月和9-11月，天气宜人，景色优美</li>
-                <li>交通建议：市内可以使用地铁、公交或打车，景区内推荐步行或骑行</li>
-                <li>住宿推荐：可以选择湖滨区域酒店，便于游览各大景点</li>
-                <li>门票信息：建议购买西湖景区联票，性价比较高</li>
-                <li>特产购买：龙井茶、丝绸、西湖藕粉、杭白菊等</li>
-            </ul>
+    <div class="header text-center">
+        <div class="container">
+            <h1><i class="fas fa-coffee"></i> 北京中间区域咖啡馆推荐</h1>
+            <p>为您和朋友精选的位于朝阳区望京宝星园与海淀中关村地铁站之间的咖啡馆</p>
+            <p class="small mt-2">更新时间: 2025年3月30日</p>
         </div>
     </div>
+
+    <div class="container">
+        <!-- 地图 -->
+        <div class="map-container" id="map">
+            <!-- 地图将通过JavaScript加载 -->
+        </div>
+
+        <h2 class="section-title">推荐咖啡馆</h2>
+
+        <div class="row">
+            <!-- 星巴克(北辰世纪中心店) -->
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="cafe-card">
+                    <div class="cafe-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');">
+                    </div>
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">星巴克(北辰世纪中心店)</h3>
+                        <div class="cafe-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-1">4.6</span>
+                        </div>
+                        <div class="cafe-info"><i class="fas fa-map-marker-alt"></i> 北辰西路8号院3号楼B座北辰世纪中心首层109单元</div>
+                        <div class="cafe-info"><i class="fas fa-clock"></i> 每天 07:00-21:30</div>
+                        <div class="cafe-info"><i class="fas fa-yen-sign"></i> 人均约44元</div>
+                        <div class="mt-3">
+                            <div class="cafe-feature"><i class="fas fa-parking"></i> 停车场</div>
+                            <div class="cafe-feature"><i class="fas fa-wifi"></i> 免费WiFi</div>
+                            <div class="cafe-feature"><i class="fas fa-briefcase"></i> 商务会面</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 星巴克(北京北辰东路第二店) -->
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="cafe-card">
+                    <div class="cafe-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');">
+                    </div>
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">星巴克(北京北辰东路第二店)</h3>
+                        <div class="cafe-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-1">4.4</span>
+                        </div>
+                        <div class="cafe-info"><i class="fas fa-map-marker-alt"></i> 北辰东路8号16号楼一层101单元</div>
+                        <div class="cafe-info"><i class="fas fa-clock"></i> 周一至周五 07:00-18:00</div>
+                        <div class="cafe-info"><i class="fas fa-yen-sign"></i> 人均约40元</div>
+                        <div class="mt-3">
+                            <div class="cafe-feature"><i class="fas fa-parking"></i> 周边停车</div>
+                            <div class="cafe-feature"><i class="fas fa-wifi"></i> 免费WiFi</div>
+                            <div class="cafe-feature"><i class="fas fa-bus"></i> 交通便利</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 五洲皇冠亚洲咖啡园 -->
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="cafe-card">
+                    <div class="cafe-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');">
+                    </div>
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">五洲皇冠亚洲咖啡园</h3>
+                        <div class="cafe-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="ms-1">4.3</span>
+                        </div>
+                        <div class="cafe-info"><i class="fas fa-map-marker-alt"></i> 北四环中路8号北京五洲皇冠国际酒店1层</div>
+                        <div class="cafe-info"><i class="fas fa-clock"></i> 周六、周日 11:30-14:30<br>周五、周六 17:30-21:30</div>
+                        <div class="cafe-info"><i class="fas fa-yen-sign"></i> 人均约252元</div>
+                        <div class="mt-3">
+                            <div class="cafe-feature"><i class="fas fa-parking"></i> 专属停车场</div>
+                            <div class="cafe-feature"><i class="fas fa-hotel"></i> 五星酒店</div>
+                            <div class="cafe-feature"><i class="fas fa-user-tie"></i> 高档会面</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 星巴克(新辰里购物中心店) -->
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="cafe-card">
+                    <div class="cafe-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1453614512568-c4024d13c247?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');">
+                    </div>
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">星巴克(新辰里购物中心店)</h3>
+                        <div class="cafe-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="ms-1">4.3</span>
+                        </div>
+                        <div class="cafe-info"><i class="fas fa-map-marker-alt"></i> 北辰东路8号1号楼1层102号003</div>
+                        <div class="cafe-info"><i class="fas fa-clock"></i> 周一至周五 07:00-17:30</div>
+                        <div class="cafe-info"><i class="fas fa-yen-sign"></i> 人均约40元</div>
+                        <div class="mt-3">
+                            <div class="cafe-feature"><i class="fas fa-parking"></i> 地下停车场</div>
+                            <div class="cafe-feature"><i class="fas fa-shopping-bag"></i> 购物中心</div>
+                            <div class="cafe-feature"><i class="fas fa-volume-mute"></i> 环境安静</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- 交通分析 -->
+            <div class="col-md-6">
+                <div class="travel-info">
+                    <h3><i class="fas fa-route"></i> 交通分析</h3>
+                    <ul>
+                        <li>从宝星园（朝阳区望京）到这些咖啡馆大约需要15-20分钟车程</li>
+                        <li>从中关村地铁站到这些咖啡馆大约需要20-25分钟车程</li>
+                        <li>所有推荐的咖啡馆都位于北四环附近，是双方的中间位置</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 停车建议 -->
+            <div class="col-md-6">
+                <div class="travel-info">
+                    <h3><i class="fas fa-parking"></i> 停车建议</h3>
+                    <ul>
+                        <li>北辰世纪中心和新辰里购物中心都有地下停车场，停车较为方便</li>
+                        <li>五洲皇冠国际酒店有专属停车场，但可能收费较高</li>
+                        <li>建议提前30分钟出发，以便有充足时间找停车位</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer text-center">
+        <div class="container">
+            <p>© 2025 北京咖啡馆推荐 | 数据来源: 高德地图</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            // 创建一个iframe来加载高德地图
+            var mapFrame = document.createElement('iframe');
+            mapFrame.width = '100%';
+            mapFrame.height = '100%';
+            mapFrame.style.border = 'none';
+
+            // 设置地图URL，包含所有咖啡馆的位置
+            var mapUrl = 'https://uri.amap.com/marker?markers=116.387790,39.999223,星巴克(北辰世纪中心店)|116.404940,39.994298,星巴克(北京北辰东路第二店)|116.405599,39.989862,五洲皇冠亚洲咖啡园|116.406845,39.991553,星巴克(新辰里购物中心店)|116.481270,40.000355,宝星园(您的位置)|116.316467,39.983991,中关村地铁站(朋友位置)&src=mypage&callnative=1';
+
+            mapFrame.src = mapUrl;
+            document.getElementById('map').appendChild(mapFrame);
+        };
+    </script>
 </body>
-</html> 
+
+</html>
