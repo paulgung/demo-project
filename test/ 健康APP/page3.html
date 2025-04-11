@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthWise - 您的智能健康管家</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        /* 引入 Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* 允许多个屏幕换行 */
+            gap: 2rem;
+            /* 屏幕之间的间距 */
+            justify-content: center;
+            padding: 2rem;
+            /* 容器内边距 */
+            background-color: #f0f4f8;
+            /* 页面背景色 */
+            min-height: 100vh;
+        }
+
+        .screen {
+            width: 375px;
+            /* 模拟 iPhone 尺寸 */
+            height: 812px;
+            /* 模拟 iPhone X/11/12/13 Pro 尺寸 */
+            background-color: #ffffff;
+            /* 屏幕默认背景色 */
+            border-radius: 30px;
+            /* 屏幕圆角 */
+            overflow: hidden;
+            /* 隐藏溢出内容 */
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            /* 屏幕阴影 */
+            border: 1px solid #e5e7eb;
+            /* 屏幕边框 */
+            display: flex;
+            flex-direction: column;
+            /* 屏幕内部垂直布局 */
+        }
+
+        /* 优化 Material Icons 的显示 */
+        .material-icons-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+
+        /* 隐藏滚动条 */
+        .screen-content {
+            overflow-y: auto;
+            /* 允许内容滚动 */
+            flex-grow: 1;
+            /* 占据剩余空间 */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        .screen-content::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+
+        /* 底部导航栏固定高度 */
+        .nav-bar {
+            height: 80px;
+            /* 固定高度 */
+            flex-shrink: 0;
+            /* 防止导航栏被压缩 */
+        }
+
+        /* 内容区域计算高度，减去导航栏高度 */
+        #home .screen-content,
+        #activity-log .screen-content {
+            height: calc(100% - 80px);
+        }
+    </style>
+    <script>
+        // Tailwind 自定义配置
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#22c55e', // green-500 (主色调 - 活力绿)
+                            dark: '#16a34a',  // green-600
+                            light: '#4ade80' // green-400
+                        },
+                        secondary: '#3b82f6', // blue-500 (辅助色 - 科技蓝)
+                        accent: '#f97316', // orange-500 (强调色 - 活力橙)
+                        'text-primary': '#1f2937', // gray-800 (主要文字)
+                        'text-secondary': '#6b7280', // gray-500 (次要文字)
+                        'text-tertiary': '#9ca3af', // gray-400 (提示文字)
+                        'bg-light': '#f9fafb', // gray-50 (浅背景)
+                        'border-color': '#e5e7eb', // gray-200 (边框)
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'], // 设置默认字体
+                    },
+                    borderRadius: { // 添加更多圆角选项
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                        '6xl': '3rem',
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="app-container">
+
+        <!-- 启动页 (Splash) -->
+        <div class="screen flex flex-col items-center justify-center bg-gradient-to-br from-primary to-green-400 p-8 text-white"
+            id="splash">
+            <span class="material-icons-outlined text-8xl mb-4">health_and_safety</span>
+            <h1 class="text-4xl font-bold mb-2">HealthWise</h1>
+            <p class="text-lg opacity-80">您的智能健康管家</p>
+            <div class="absolute bottom-10 animate-pulse">
+                <span class="material-icons-outlined">keyboard_double_arrow_up</span>
+            </div>
+            <a href="#login" class="absolute inset-0" aria-label="跳转到登录页"></a>
+        </div>
+
+        <!-- 登录页 (Login) -->
+        <div class="screen flex flex-col bg-white" id="login">
+            <div class="screen-content p-8 flex-grow flex flex-col justify-center">
+                <div class="text-center mb-12">
+                    <span class="material-icons-outlined text-6xl text-primary mb-2">health_and_safety</span>
+                    <h2 class="text-3xl font-semibold text-text-primary">欢迎回来</h2>
+                    <p class="text-text-secondary mt-1">登录以继续您的健康之旅</p>
+                </div>
+                <div class="space-y-5">
+                    <div class="relative">
+                        <span
+                            class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-tertiary">mail_outline</span>
+                        <input type="email" placeholder="邮箱地址"
+                            class="w-full pl-10 pr-4 py-3 border border-border-color rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    </div>
+                    <div class="relative">
+                        <span
+                            class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-tertiary">lock_outline</span>
+                        <input type="password" placeholder="密码"
+                            class="w-full pl-10 pr-10 py-3 border border-border-color rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                        <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-tertiary">
+                            <span class="material-icons-outlined text-lg">visibility_off</span>
+                        </button>
+                    </div>
+                    <a href="#" class="block text-right text-sm text-primary hover:underline">忘记密码?</a>
+                </div>
+                <a href="#home"
+                    class="w-full bg-primary text-white text-center py-3 rounded-xl font-semibold mt-8 hover:bg-primary-dark transition duration-200 shadow-md shadow-primary/30">登录</a>
+                <div class="mt-10 text-center">
+                    <p class="text-sm text-text-tertiary">还没有账号? <a href="#register"
+                            class="font-semibold text-primary hover:underline">立即注册</a></p>
+                </div>
+                <div class="relative my-8">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-border-color"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="px-2 bg-white text-sm text-text-tertiary">或使用社交账号登录</span>
+                    </div>
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <button
+                        class="w-12 h-12 flex items-center justify-center border border-border-color rounded-full hover:bg-gray-50 transition">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                            <path fill="#EA4335"
+                                d="M24 9.5c3.21 0 5.89 1.14 7.81 2.94l5.59-5.59C34.2 3.57 29.59 1.5 24 1.5 14.9 1.5 7.18 6.9 4.04 14.71l6.53 5.07C12.15 13.68 17.64 9.5 24 9.5z" />
+                            <path fill="#4285F4"
+                                d="M46.17 24.61c0-1.7-.15-3.34-.43-4.92H24v9.39h12.45c-.54 3.04-2.08 5.61-4.6 7.38l6.53 5.07C42.58 38.19 46.17 32.01 46.17 24.61z" />
+                            <path fill="#FBBC05"
+                                d="M10.57 19.78C10.04 18.23 9.74 16.6 9.74 14.89s.3-3.34 1.04-4.77l-6.53-5.07C2.41 8.48 1.5 11.61 1.5 14.89c0 3.28.91 6.41 2.54 9.08l6.53-5.07z" />
+                            <path fill="#34A853"
+                                d="M24 46.5c5.59 0 10.2-1.85 13.6-4.99l-6.53-5.07c-1.85 1.24-4.2 1.98-7.07 1.98-6.36 0-11.85-4.18-13.43-9.96l-6.53 5.07C7.18 41.1 14.9 46.5 24 46.5z" />
+                            <path fill="none" d="M0 0h48v48H0z" />
+                        </svg>
+                    </button>
+                    <button
+                        class="w-12 h-12 flex items-center justify-center border border-border-color rounded-full hover:bg-gray-50 transition">
+                        <svg class="w-6 h-6 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M19.17 13.54C19.1 12.75 19 11.89 19 11.18C19 9.07 19.5 7.5 20.24 5.97C19.03 5.05 17.5 4.5 15.97 4.5C14.12 4.5 13 5.5 12 5.5C11 5.5 9.88 4.5 8.03 4.5C6.5 4.5 4.97 5.05 3.76 5.97C4.5 7.5 5 9.07 5 11.18C5 11.89 4.9 12.75 4.83 13.54H4.82C4.09 16.38 5.31 19.5 7.58 19.5C8.83 19.5 9.56 18.75 10.92 18.75C12.28 18.75 12.91 19.5 14.34 19.5C16.61 19.5 17.91 16.38 19.17 13.54M12 3C12.59 3.03 13.35 2.59 13.85 2.21C13.43 1.44 12.78 1 12 1C11.22 1 10.57 1.44 10.15 2.21C10.65 2.59 11.41 3.03 12 3Z" />
+                        </svg>
+                    </button>
+                    <button
+                        class="w-12 h-12 flex items-center justify-center border border-border-color rounded-full hover:bg-gray-50 transition">
+                        <svg class="w-6 h-6 text-[#1877F2]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-1.5c-1 0-1.5.5-1.5 1.5V12h3l-.5 3h-2.5v6.8c4.56-.93 8-4.96 8-9.8z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 注册页 (Register) -->
+        <div class="screen flex flex-col bg-white" id="register">
+            <div class="p-6 pb-0">
+                <a href="#login" class="text-text-secondary p-2 -ml-2 inline-block">
+                    <span class="material-icons-outlined align-bottom">arrow_back</span>
+                </a>
+            </div>
+            <div class="screen-content p-8 pt-4 flex-grow flex flex-col justify-center">
+                <div class="text-center mb-10">
+                    <span class="material-icons-outlined text-6xl text-primary mb-2">health_and_safety</span>
+                    <h2 class="text-3xl font-semibold text-text-primary">创建账号</h2>
+                    <p class="text-text-secondary mt-1">开启您的健康生活</p>
+                </div>
+                <div class="space-y-5">
+                    <div class="relative">
+                        <span
+                            class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-tertiary">person_outline</span>
+                        <input type="text" placeholder="用户名"
+                            class="w-full pl-10 pr-4 py-3 border border-border-color rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    </div>
+                    <div class="relative">
+                        <span
+                            class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-tertiary">mail_outline</span>
+                        <input type="email" placeholder="邮箱地址"
+                            class="w-full pl-10 pr-4 py-3 border border-border-color rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    </div>
+                    <div class="relative">
+                        <span
+                            class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-tertiary">lock_outline</span>
+                        <input type="password" placeholder="设置密码"
+                            class="w-full pl-10 pr-4 py-3 border border-border-color rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    </div>
+                    <div class="relative">
+                        <span
+                            class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-tertiary">lock_outline</span>
+                        <input type="password" placeholder="确认密码"
+                            class="w-full pl-10 pr-4 py-3 border border-border-color rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    </div>
+                </div>
+                <div class="mt-6 flex items-start space-x-2">
+                    <input type="checkbox" id="terms"
+                        class="mt-1 h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                    <label for="terms" class="text-sm text-text-secondary">我已阅读并同意 <a href="#"
+                            class="text-primary hover:underline">服务条款</a> 和 <a href="#"
+                            class="text-primary hover:underline">隐私政策</a>。</label>
+                </div>
+                <a href="#home"
+                    class="w-full bg-primary text-white text-center py-3 rounded-xl font-semibold mt-8 hover:bg-primary-dark transition duration-200 shadow-md shadow-primary/30">注册</a>
+                <div class="mt-10 text-center">
+                    <p class="text-sm text-text-tertiary">已经有账号了? <a href="#login"
+                            class="font-semibold text-primary hover:underline">立即登录</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主页/仪表盘 (Home/Dashboard) -->
+        <div class="screen flex flex-col bg-bg-light" id="home">
+            <div class="screen-content p-6 pb-0 flex-grow">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <p class="text-text-secondary text-sm">早上好,</p>
+                        <h1 class="text-2xl font-semibold text-text-primary">王丽</h1>
+                    </div>
+                    <a href="#notifications" class="relative p-2 text-text-secondary hover:text-text-primary">
+                        <span class="material-icons-outlined">notifications_none</span>
+                        <span
+                            class="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+                    </a>
+                </div>
+                <div class="bg-gradient-to-r from-primary to-green-400 rounded-3xl p-5 text-white shadow-lg mb-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-sm opacity-80">今日步数</p>
+                            <p class="text-3xl font-bold">8,750 <span class="text-lg font-normal">/ 10,000</span></p>
+                        </div>
+                        <span class="material-icons-outlined text-4xl opacity-50">directions_walk</span>
+                    </div>
+                    <div class="w-full bg-white/30 rounded-full h-2">
+                        <div class="bg-white rounded-full h-2" style="width: 87.5%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2 opacity-80">
+                        <span>卡路里: 350 kcal</span>
+                        <span>距离: 6.1 km</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <a href="#activity"
+                        class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition">
+                        <span class="material-icons-outlined text-3xl text-secondary mb-1">fitness_center</span>
+                        <span class="text-xs text-text-primary text-center font-medium">运动记录</span>
+                    </a>
+                    <a href="#diet"
+                        class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition">
+                        <span class="material-icons-outlined text-3xl text-accent mb-1">restaurant_menu</span>
+                        <span class="text-xs text-text-primary text-center font-medium">饮食追踪</span>
+                    </a>
+                    <a href="#sleep"
+                        class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition">
+                        <span class="material-icons-outlined text-3xl text-purple-500 mb-1">bedtime</span>
+                        <span class="text-xs text-text-primary text-center font-medium">睡眠分析</span>
+                    </a>
+                    <a href="#heart-rate"
+                        class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition">
+                        <span class="material-icons-outlined text-3xl text-red-500 mb-1">favorite_border</span>
+                        <span class="text-xs text-text-primary text-center font-medium">心率监测</span>
+                    </a>
+                    <a href="#water"
+                        class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition">
+                        <span class="material-icons-outlined text-3xl text-blue-400 mb-1">water_drop</span>
+                        <span class="text-xs text-text-primary text-center font-medium">饮水提醒</span>
+                    </a>
+                    <a href="#meditation"
+                        class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition">
+                        <span class="material-icons-outlined text-3xl text-teal-500 mb-1">self_improvement</span>
+                        <span class="text-xs text-text-primary text-center font-medium">冥想放松</span>
+                    </a>
+                </div>
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-text-primary mb-3">今日任务</h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center bg-white p-4 rounded-2xl shadow-sm">
+                            <span class="material-icons-outlined text-primary mr-3">check_circle_outline</span>
+                            <div class="flex-grow">
+                                <p class="text-sm font-medium text-text-primary">完成 10 分钟晨间瑜伽</p>
+                                <p class="text-xs text-text-tertiary">8:00 AM</p>
+                            </div>
+                            <span class="material-icons-outlined text-primary">check</span>
+                        </div>
+                        <div class="flex items-center bg-white p-4 rounded-2xl shadow-sm">
+                            <span class="material-icons-outlined text-orange-400 mr-3">radio_button_unchecked</span>
+                            <div class="flex-grow">
+                                <p class="text-sm font-medium text-text-primary">饮用 8 杯水</p>
+                                <p class="text-xs text-text-tertiary">进行中 (5/8)</p>
+                            </div>
+                            <div class="w-16 h-6 bg-gray-200 rounded-full flex items-center p-0.5">
+                                <div class="w-5/8 bg-orange-400 h-full rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-white p-4 rounded-2xl shadow-sm">
+                            <span class="material-icons-outlined text-text-tertiary mr-3">radio_button_unchecked</span>
+                            <div class="flex-grow">
+                                <p class="text-sm font-medium text-text-primary">记录晚餐热量</p>
+                                <p class="text-xs text-text-tertiary">晚上 7:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-lg font-semibold text-text-primary">健康资讯</h2>
+                        <a href="#articles" class="text-sm text-primary hover:underline">查看更多</a>
+                    </div>
+                    <a href="#" class="block bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=799&q=80"
+                            alt="Healthy lifestyle" class="w-full h-32 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-text-primary mb-1">保持活力的 5 个简单习惯</h3>
+                            <p class="text-xs text-text-secondary">了解如何在忙碌的生活中轻松融入健康习惯。</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="nav-bar bg-white border-t border-border-color flex justify-around items-center">
+                <a href="#home" class="flex flex-col items-center text-primary p-2">
+                    <span class="material-icons-outlined">home</span>
+                    <span class="text-xs font-medium">首页</span>
+                </a>
+                <a href="#activity-log"
+                    class="flex flex-col items-center text-text-tertiary p-2 hover:text-primary transition">
+                    <span class="material-icons-outlined">timeline</span>
+                    <span class="text-xs font-medium">活动</span>
+                </a>
+                <a href="#add-entry" class="flex flex-col items-center p-2 -mt-6">
+                    <span
+                        class="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white shadow-lg shadow-primary/40">
+                        <span class="material-icons-outlined text-3xl">add</span>
+                    </span>
+                </a>
+                <a href="#community"
+                    class="flex flex-col items-center text-text-tertiary p-2 hover:text-primary transition">
+                    <span class="material-icons-outlined">groups</span>
+                    <span class="text-xs font-medium">社区</span>
+                </a>
+                <a href="#profile"
+                    class="flex flex-col items-center text-text-tertiary p-2 hover:text-primary transition">
+                    <span class="material-icons-outlined">person_outline</span>
+                    <span class="text-xs font-medium">我的</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 活动记录页 (Activity Log) -->
+        <div class="screen flex flex-col bg-bg-light" id="activity-log">
+            <!-- 顶部标题和日期选择 -->
+            <div class="p-6 pb-3 bg-white border-b border-border-color">
+                <h1 class="text-xl font-semibold text-text-primary text-center mb-4">活动记录</h1>
+                <div class="flex items-center justify-between">
+                    <button class="p-1 text-text-secondary hover:text-primary">
+                        <span class="material-icons-outlined">chevron_left</span>
+                    </button>
+                    <div class="text-center">
+                        <p class="font-medium text-text-primary">2024年7月</p>
+                        <p class="text-xs text-text-tertiary">本周</p>
+                    </div>
+                    <button class="p-1 text-text-secondary hover:text-primary">
+                        <span class="material-icons-outlined">chevron_right</span>
+                    </button>
+                </div>
+                <!-- 星期/日期切换 -->
+                <div class="mt-4 flex justify-around">
+                    <button class="text-xs font-medium p-2 text-text-tertiary hover:text-primary">周</button>
+                    <button class="text-xs font-medium p-2 text-primary border-b-2 border-primary">月</button>
+                    <button class="text-xs font-medium p-2 text-text-tertiary hover:text-primary">年</button>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="screen-content p-6 flex-grow">
+                <!-- 步数统计图表 -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-base font-semibold text-text-primary">步数统计</h2>
+                        <span class="text-xs text-text-secondary">平均 8,230 步/天</span>
+                    </div>
+                    <!-- Chart.js Canvas -->
+                    <div class="h-48">
+                        <canvas id="stepsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 锻炼记录 -->
+                <div class="mb-6">
+                    <h2 class="text-base font-semibold text-text-primary mb-3">最近锻炼</h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center bg-white p-4 rounded-2xl shadow-sm">
+                            <span class="material-icons-outlined text-secondary mr-4 text-3xl">directions_run</span>
+                            <div class="flex-grow">
+                                <p class="text-sm font-medium text-text-primary">户外跑步</p>
+                                <p class="text-xs text-text-secondary">今天 07:15 AM</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-medium text-text-primary">5.2 km</p>
+                                <p class="text-xs text-text-secondary">35 分钟</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-white p-4 rounded-2xl shadow-sm">
+                            <span class="material-icons-outlined text-purple-500 mr-4 text-3xl">self_improvement</span>
+                            <div class="flex-grow">
+                                <p class="text-sm font-medium text-text-primary">瑜伽放松</p>
+                                <p class="text-xs text-text-secondary">昨天 08:00 AM</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-medium text-text-primary">45 分钟</p>
+                                <p class="text-xs text-text-secondary">150 kcal</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-white p-4 rounded-2xl shadow-sm">
+                            <span class="material-icons-outlined text-accent mr-4 text-3xl">fitness_center</span>
+                            <div class="flex-grow">
+                                <p class="text-sm font-medium text-text-primary">力量训练</p>
+                                <p class="text-xs text-text-secondary">周二 06:00 PM</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-medium text-text-primary">60 分钟</p>
+                                <p class="text-xs text-text-secondary">300 kcal</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#all-workouts"
+                        class="block text-center text-primary text-sm mt-4 hover:underline">查看所有锻炼记录</a>
+                </div>
+
+                <!-- 其他活动数据概览 -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm">
+                        <span class="material-icons-outlined text-red-500 mb-1">local_fire_department</span>
+                        <p class="text-xs text-text-secondary">卡路里消耗</p>
+                        <p class="text-xl font-semibold text-text-primary mt-1">15,680 <span
+                                class="text-sm font-normal">kcal</span></p>
+                        <p class="text-xs text-text-tertiary">本月</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm">
+                        <span class="material-icons-outlined text-blue-500 mb-1">hourglass_top</span>
+                        <p class="text-xs text-text-secondary">活动时长</p>
+                        <p class="text-xl font-semibold text-text-primary mt-1">25.5 <span
+                                class="text-sm font-normal">小时</span></p>
+                        <p class="text-xs text-text-tertiary">本月</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 底部导航栏 -->
+            <div class="nav-bar bg-white border-t border-border-color flex justify-around items-center">
+                <a href="#home" class="flex flex-col items-center text-text-tertiary p-2 hover:text-primary transition">
+                    <span class="material-icons-outlined">home</span>
+                    <span class="text-xs font-medium">首页</span>
+                </a>
+                <a href="#activity-log" class="flex flex-col items-center text-primary p-2">
+                    <span class="material-icons-outlined">timeline</span>
+                    <span class="text-xs font-medium">活动</span>
+                </a>
+                <a href="#add-entry" class="flex flex-col items-center p-2 -mt-6">
+                    <span
+                        class="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white shadow-lg shadow-primary/40">
+                        <span class="material-icons-outlined text-3xl">add</span>
+                    </span>
+                </a>
+                <a href="#community"
+                    class="flex flex-col items-center text-text-tertiary p-2 hover:text-primary transition">
+                    <span class="material-icons-outlined">groups</span>
+                    <span class="text-xs font-medium">社区</span>
+                </a>
+                <a href="#profile"
+                    class="flex flex-col items-center text-text-tertiary p-2 hover:text-primary transition">
+                    <span class="material-icons-outlined">person_outline</span>
+                    <span class="text-xs font-medium">我的</span>
+                </a>
+            </div>
+        </div>
+
+
+        <!-- 更多页面将在这里添加 -->
+
+    </div>
+
+    <script>
+        // 示例: 初始化 Chart.js 图表
+        const ctx = document.getElementById('stepsChart')?.getContext('2d');
+        if (ctx) {
+            // 定义渐变色
+            const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+            gradient.addColorStop(0, 'rgba(34, 197, 94, 0.6)'); // primary with opacity
+            gradient.addColorStop(1, 'rgba(34, 197, 94, 0.1)');
+
+            const stepsChart = new Chart(ctx, {
+                type: 'line', // 使用折线图
+                data: {
+                    labels: ['一', '二', '三', '四', '五', '六', '日'], // 示例标签
+                    datasets: [{
+                        label: '步数',
+                        data: [7500, 8200, 9100, 7800, 10500, 9500, 8750], // 示例数据
+                        borderColor: tailwind.theme.extend.colors.primary.DEFAULT, // 使用主色调
+                        backgroundColor: gradient, // 使用渐变填充
+                        borderWidth: 2,
+                        pointBackgroundColor: tailwind.theme.extend.colors.primary.DEFAULT,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        tension: 0.4, // 使线条平滑
+                        fill: true // 填充区域
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false, // 不绘制 Y 轴边框
+                                color: '#e5e7eb' // 网格线颜色
+                            },
+                            ticks: {
+                                color: '#9ca3af', // 刻度文字颜色
+                                padding: 10, // 刻度与图表的距离
+                                // 格式化刻度，例如显示为 8k
+                                callback: function (value) {
+                                    if (value >= 1000) {
+                                        return (value / 1000) + 'k';
+                                    }
+                                    return value;
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false, // 不显示 X 轴网格线
+                            },
+                            ticks: {
+                                color: '#9ca3af' // 刻度文字颜色
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false // 不显示图例
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(31, 41, 55, 0.8)', // gray-800 with opacity
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 10,
+                            cornerRadius: 8,
+                            displayColors: false, // 不显示颜色块
+                            callbacks: {
+                                label: function (context) {
+                                    return `${context.parsed.y} 步`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
