@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+    <html lang=zh-CN>
+    <meta charset=UTF-8>
+    <meta content=width=device-width,initial-scale=1.0 name=viewport>
+    <title>智能体互联网：释放AI能力的未来</title>
+    <script src=https://cdn.tailwindcss.com/3.4.16></script>
+    <script>tailwind.config = { darkMode: `class` }</script>
+    <link href=https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css rel=stylesheet>
+    <script src=https://jsdelivr.topthink.com/npm/chart.js></script>
+    <style>
+        @import "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap";
+
+        :root {
+            --primary: #5e6ad2;
+            --primary-light: #8a94e2;
+            --secondary: #f5f5f7;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --bg-primary: #fff;
+            --bg-secondary: #f9fafb;
+            --border: #e5e7eb
+        }
+
+        .dark {
+            --primary: #8a94e2;
+            --primary-light: #5e6ad2;
+            --secondary: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --border: #374151
+        }
+
+        body {
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            font-family: Noto Sans SC, sans-serif;
+            transition: background-color .3s, color .3s
+        }
+
+        .card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            transition: transform .3s, box-shadow .3s, border-color .3s
+        }
+
+        .card:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px #0000001a, 0 10px 10px -5px #0000000a
+        }
+
+        .btn {
+            transition: transform .2s, background-color .2s
+        }
+
+        .btn:hover {
+            transform: scale(1.02)
+        }
+
+        .fade-in {
+            animation: .8s ease-in fadeIn
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .section-title {
+            display: inline-block;
+            position: relative
+        }
+
+        .section-title:after {
+            content: "";
+            background-color: var(--primary);
+            width: 40%;
+            height: 3px;
+            transition: width .3s;
+            position: absolute;
+            bottom: -5px;
+            left: 0
+        }
+
+        .section-title:hover:after {
+            width: 100%
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 500
+        }
+
+        .quote {
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+            font-style: italic
+        }
+    </style>
+
+    <body class=min-h-screen>
+        <header class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white">智能体互联网</h1>
+                <div class="flex items-center space-x-4"><button
+                        class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" id=theme-toggle><i
+                            class="fas fa-sun text-yellow-500 dark:hidden"></i> <i
+                            class="fas fa-moon text-blue-300 hidden dark:block"></i></button></div>
+            </div>
+        </header>
+        <main class="container mx-auto px-4 py-8">
+            <section class="mb-16 fade-in">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">智能体互联网：释放AI能力的未来</h1>
+                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">探索下一代互联网如何通过智能体技术实现深刻变革
+                    <div class="flex flex-wrap justify-center gap-4"><a
+                            class="btn bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium"
+                            href=#essence> 互联网演进的本质 </a><a
+                            class="btn bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white px-6 py-3 rounded-lg font-medium"
+                            href=#future> 未来设想 </a></div>
+                </div>
+            </section>
+            <section class="mb-16 fade-in" id=essence>
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-8">决定互联网演进方向的本质问题</h2>
+                    <div class="card rounded-xl p-6 md:p-8 mb-8">
+                        <p class="text-lg mb-4">我们认为，推动互联网演进的最本质问题，或者最底层的推动力，是如何<span class=highlight>释放新技术的能力</span>。
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div class="bg-indigo-50 dark:bg-gray-800 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold mb-3 flex items-center"><i
+                                        class="fas fa-desktop mr-2 text-indigo-600 dark:text-indigo-400"></i> PC互联网时代
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    以浏览器和Web技术为媒介的产品形态，释放了开放互联网的访问能力，让信息可以通过统一入口被广泛获取。
+                            </div>
+                            <div class="bg-indigo-50 dark:bg-gray-800 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold mb-3 flex items-center"><i
+                                        class="fas fa-mobile-alt mr-2 text-indigo-600 dark:text-indigo-400"></i> 移动互联网时代
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    APP能够通过操作系统的API深度整合硬件能力，针对设备性能优化运行效率，持续在线并且实时互动。
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-4">当前及未来10年：AI技术将成为主导</h3>
+                        <p class=mb-4>在当下以及未来10年，新技术无疑是以生成式人工智能、大语言模型、智能体为代表的AI技术。如何释放AI的能力，决定了未来互联网的演进方向。
+                        <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg mt-6">
+                            <h4 class="font-medium mb-3">互联网演进的关键因素</h4>
+                            <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                                <li class="flex items-start"><i
+                                        class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>PC互联网：网络通信技术、Web技术、数据库技术、信息搜索等</span>
+                                <li class="flex items-start"><i
+                                        class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>移动互联网：移动设备与硬件、移动网络、移动操作系统等</span>
+                                <li class="flex items-start"><i
+                                        class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>未来互联网：生成式AI、大语言模型、智能体等AI技术</span>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="mb-16 fade-in" id=challenges>
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-8">下一代互联网应如何释放AI的能力</h2>
+                    <div class="card rounded-xl p-6 md:p-8 mb-8">
+                        <h3 class="text-xl font-semibold mb-4">当前的挑战</h3>
+                        <p class=mb-4>当前的互联网基础设施已经相当的完善，但是面对AI的特性，要充分释放AI的能力，还面临一些挑战。
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                            <div class="bg-gray-50 dark:bg-gray-800 p-5 rounded-lg">
+                                <div class="text-center mb-3"><i
+                                        class="fas fa-database text-3xl text-indigo-600 dark:text-indigo-400"></i></div>
+                                <h4 class="font-medium text-center mb-2">信息孤岛问题</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
+                                    AI只有获得完整的上下文信息，才能做出正确的决策。当前互联网本质上由一个个的信息孤岛组成。
+                            </div>
+                            <div class="bg-gray-50 dark:bg-gray-800 p-5 rounded-lg">
+                                <div class="text-center mb-3"><i
+                                        class="fas fa-tools text-3xl text-indigo-600 dark:text-indigo-400"></i></div>
+                                <h4 class="font-medium text-center mb-2">工具调用限制</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
+                                    只有能够调用所有的工具能力，才能高效的完成复杂任务。当前互联网的工具调用存在诸多限制。
+                            </div>
+                            <div class="bg-gray-50 dark:bg-gray-800 p-5 rounded-lg">
+                                <div class="text-center mb-3"><i
+                                        class="fas fa-users text-3xl text-indigo-600 dark:text-indigo-400"></i></div>
+                                <h4 class="font-medium text-center mb-2">人类中介角色</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
+                                    在之前，人类扮演了信息孤岛的"缝合怪"的角色，通过浏览器、APP、搜索引擎等连接信息孤岛。
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6 md:p-8 mb-8">
+                        <h3 class="text-xl font-semibold mb-4">AI接入互联网的方案分析</h3>
+                        <div class=space-y-6>
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 h-10 w-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center">
+                                    <i class="fas fa-times text-red-500 dark:text-red-300"></i></div>
+                                <div class=ml-4>
+                                    <h4 class=font-medium>Computer Use技术</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">
+                                        让AI模仿人类，学习使用图形界面、浏览器或APP终端接口。我们认为这不是最高效的路径，短期和中期可能有价值，长期价值不大。
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 h-10 w-10 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 dark:text-yellow-300"></i>
+                                </div>
+                                <div class=ml-4>
+                                    <h4 class=font-medium>AI手机方案</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">
+                                        通过APP客户端开放的接口，打通互联网的数据与能力。AI手机和APP关系有些尴尬，既想获得AI手机带来的流量，又不想开放太多数据以被AI手机替代。
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                                    <i class="fas fa-check text-green-500 dark:text-green-300"></i></div>
+                                <div class=ml-4>
+                                    <h4 class=font-medium>Agent Network Protocol</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">
+                                        我们认为AI更擅长处理底层数据而非图形界面。AI应该用它最擅长的方式（API或通信协议），与互联网交互。这是当下最符合我们设想的方案。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-4">AI协作的未来</h3>
+                        <p class=mb-4>传统的网络节点，往往通过硬编码或人工的方式来进行连接。有了AI之后，网络的连接、协作方式也许可以更加的高效。
+                        <div class="bg-indigo-50 dark:bg-gray-800 p-6 rounded-lg mt-6">
+                            <h4 class="font-medium mb-3">高效协作方式</h4>
+                            <p class="text-gray-700 dark:text-gray-300">
+                                两个AI节点可以利用自然语言的生成与理解能力，先使用自然语言沟通双方的能力与接口，然后使用标准协议或共识协议进行通信与协作。这将有助于构建一个更加高效、更低成本的协作网络。
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="mb-16 fade-in" id=solutions>
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-8">释放AI能力的三大关键</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="card rounded-xl overflow-hidden">
+                            <div class="bg-indigo-600 dark:bg-indigo-800 p-4">
+                                <h3 class="text-white text-xl font-semibold">🌐 互联互通</h3>
+                            </div>
+                            <div class=p-6>
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    让所有的智能体相互之间都能够进行通信，打破数据孤岛，让AI能够获得完整的上下文信息，能够调用互联网上的所有工具。
+                            </div>
+                        </div>
+                        <div class="card rounded-xl overflow-hidden">
+                            <div class="bg-indigo-600 dark:bg-indigo-800 p-4">
+                                <h3 class="text-white text-xl font-semibold">🖥️ 原生接口</h3>
+                            </div>
+                            <div class=p-6>
+                                <p class="text-gray-700 dark:text-gray-300">AI无需模仿人类访问互联网，AI应该用它最擅长的方式（API或通信协议）与互联网交互。
+                            </div>
+                        </div>
+                        <div class="card rounded-xl overflow-hidden">
+                            <div class="bg-indigo-600 dark:bg-indigo-800 p-4">
+                                <h3 class="text-white text-xl font-semibold">🤝 高效协作</h3>
+                            </div>
+                            <div class=p-6>
+                                <p class="text-gray-700 dark:text-gray-300">利用AI，智能体之间可以自组织、自协商，构建比现有互联网更低成本、更高效率的协作网络。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="mb-16 fade-in" id=agentic-web>
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-8">智能体互联网(Agentic Web)是什么样的</h2>
+                    <div class="card rounded-xl p-6 md:p-8 mb-8">
+                        <p class="text-lg mb-6">关于智能体互联网的定义，是个比较大的命题，我们给不了学术上的严谨定义。但是我们可以从通俗的角度阐述下我们对它的理解。
+                        <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg mb-6">
+                            <h3 class="text-xl font-semibold mb-3">互联网演进历程</h3>
+                            <div class=relative>
+                                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-indigo-200 dark:bg-indigo-900">
+                                </div>
+                                <div class="relative pl-12 pb-8">
+                                    <div
+                                        class="absolute left-0 w-8 h-8 rounded-full bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
+                                        <span class="text-white font-bold">1</span></div>
+                                    <h4 class="font-medium mb-2">PC互联网</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">人用PC上网
+                                </div>
+                                <div class="relative pl-12 pb-8">
+                                    <div
+                                        class="absolute left-0 w-8 h-8 rounded-full bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
+                                        <span class="text-white font-bold">2</span></div>
+                                    <h4 class="font-medium mb-2">移动互联网</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">人使用移动终端上网
+                                </div>
+                                <div class="relative pl-12">
+                                    <div
+                                        class="absolute left-0 w-8 h-8 rounded-full bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
+                                        <span class="text-white font-bold">3</span></div>
+                                    <h4 class="font-medium mb-2">智能体互联网</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">智能体代替人上网，代替人与数字世界交互
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-4">智能体互联网的核心特征</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-indigo-50 dark:bg-gray-800 p-5 rounded-lg">
+                                <h4 class="font-medium mb-2">超级个人助理</h4>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    入口未来大概率是一个特殊的智能体：超级个人助理。它代替人类上网，并且在客户端通过个性化的UI与人类交互。在后端通过API或协议，与其他的智能体进行交互。
+                            </div>
+                            <div class="bg-indigo-50 dark:bg-gray-800 p-5 rounded-lg">
+                                <h4 class="font-medium mb-2">去中心化协作</h4>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    无论是个人助理，还是背后提供服务的智能体，无论他们属于哪个公司，哪个平台，他们都可以互联互通。如果智能体能够代表一个人或一个实体作为互联网中的一个节点互相连接协作，那中心化平台的作用会降低。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="mb-16 fade-in" id=future>
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-8">未来设想</h2>
+                    <div class="card rounded-xl p-6 md:p-8 mb-8">
+                        <div class="quote mb-6">
+                            <p class="text-lg italic">归根到底，我们认为是技术的发展推动了互联网的演进，如何释放新技术的能力，决定了互联网的演进方向。
+                        </div>
+                        <p class=mb-6>智能体互联网会不会出现，我们现在还不确定，但是我们可以确定的是，未来互联网肯定会因为AI技术的发展而深刻的改变。
+                        <div class="bg-indigo-50 dark:bg-gray-800 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-4">Agent Network Protocol</h3>
+                            <p class="text-gray-700 dark:text-gray-300 mb-4">
+                                我们正在根据我们的设想，开发一个用于智能体通信的开源标准协议：AgentNetworkProtocol，项目地址：<a
+                                    class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                                    href=https://github.com/chgaowei/AgentNetworkProtocol>https://github.com/chgaowei/AgentNetworkProtocol</a>
+                            <p class="text-gray-700 dark:text-gray-300">
+                                AgentNetworkProtocol的目标是成为智能体互联网时代的HTTP。我们的愿景是定义智能体之间的连接方式，为数十亿智能体构建一个开放、安全、高效的协作网络。
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-4">联系我们</h3>
+                        <p class=mb-6>如果你也对智能体通信协议或智能体互联网感兴趣，欢迎联系我们。我们最近正在和国内外的AI从业者分享交流：
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                                <div class="flex items-center mb-2"><i
+                                        class="fab fa-weixin text-indigo-600 dark:text-indigo-400 mr-2"></i><span
+                                        class=font-medium>微信</span></div>
+                                <p class="text-gray-600 dark:text-gray-400">flow10240
+                            </div>
+                            <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                                <div class="flex items-center mb-2"><i
+                                        class="fas fa-envelope text-indigo-600 dark:text-indigo-400 mr-2"></i><span
+                                        class=font-medium>邮箱</span></div>
+                                <p class="text-gray-600 dark:text-gray-400">chgaowei@gmail.com
+                            </div>
+                            <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                                <div class="flex items-center mb-2"><i
+                                        class="fas fa-globe text-indigo-600 dark:text-indigo-400 mr-2"></i><span
+                                        class=font-medium>网站</span></div>
+                                <p class="text-gray-600 dark:text-gray-400">
+                                    https://github.com/chgaowei/AgentNetworkProtocol
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="mb-16 fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-8">更多阅读</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><a
+                            class="card rounded-xl p-6 hover:border-indigo-500 transition-colors" href=#>
+                            <h3 class="text-lg font-semibold mb-2">OpenAI新动静：开源推理模型、400亿新融资，以及1小时新增了100万用户</h3>
+                            <p class="text-gray-600 dark:text-gray-400">探索OpenAI的最新动态和市场表现</p>
+                        </a><a class="card rounded-xl p-6 hover:border-indigo-500 transition-colors" href=#>
+                            <h3 class="text-lg font-semibold mb-2">拾象科技万字详解MCP：Agentic AI中间层最优解，以及创业公司的三个机会</h3>
+                            <p class="text-gray-600 dark:text-gray-400">深入了解MCP技术及其商业价值</p>
+                        </a><a class="card rounded-xl p-6 hover:border-indigo-500 transition-colors" href=#>
+                            <h3 class="text-lg font-semibold mb-2">AppStore首页推荐后，依然月入不足3000，独立开发两年血泪复盘</h3>
+                            <p class="text-gray-600 dark:text-gray-400">独立开发者的真实经历与经验分享</p>
+                        </a><a class="card rounded-xl p-6 hover:border-indigo-500 transition-colors" href=#>
+                            <h3 class="text-lg font-semibold mb-2">OWL团队万字分享：复现Manus最好的团队，如何看待Agentic AI的落地现状？</h3>
+                            <p class="text-gray-600 dark:text-gray-400">OWL团队对Agentic AI的深度分析</p>
+                        </a></div>
+                </div>
+            </section>
+        </main>
+        <footer class="bg-gray-100 dark:bg-gray-900 py-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">作者信息</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">作者: 秘塔AI搜索
+                    </div>
+                    <div class="flex space-x-4"><a
+                            class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+                            href=#> <i class="fab fa-weixin text-xl"></i> </a><a
+                            class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+                            href=#> <i class="fas fa-envelope text-xl"></i> </a><a
+                            class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+                            href=#> <i class="fas fa-globe text-xl"></i> </a></div>
+                </div>
+                <div class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">© 2025 秘塔AI搜索. 保留所有权利.</div>
+            </div>
+        </footer>
+        <script>const themeToggle = document.getElementById(`theme-toggle`); if (window.matchMedia && window.matchMedia(`(prefers-color-scheme: dark)`).matches) { document.documentElement.classList.add(`dark`) }; themeToggle.addEventListener(`click`, () => { document.documentElement.classList.toggle(`dark`) }); document.addEventListener(`DOMContentLoaded`, () => { const a = document.querySelectorAll(`.fade-in`); const b = new IntersectionObserver(a => { a.forEach(a => { if (a.isIntersecting) { a.target.style.opacity = `1`; a.target.style.transform = `translateY(0)` } }) }, { threshold: 0.1 }); a.forEach(a => { a.style.opacity = `0`; a.style.transform = `translateY(20px)`; a.style.transition = `opacity 0.8s ease, transform 0.8s ease`; b.observe(a) }) })</script>
