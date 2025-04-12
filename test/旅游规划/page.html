@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杭州一日游规划</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 可以在这里添加少量自定义 Tailwind 配置或基础样式 (如果需要) */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* 更现代的字体 */
+        }
+
+        /* 强制隐藏滚动条 */
+        html,
+        body {
+            overflow: hidden;
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800 h-screen flex flex-col">
+
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md fixed w-full top-0 left-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-600 mr-2" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M5.05 3.636a1 1 0 011.414 0L10 7.172l3.536-3.536a1 1 0 111.414 1.414L11.414 8.586l3.536 3.535a1 1 0 11-1.414 1.414L10 10.414l-3.536 3.535a1 1 0 01-1.414-1.414L8.586 8.586 5.05 5.05a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-xl font-bold text-gray-800">杭州印象</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-teal-600 transition duration-150 ease-in-out">首页</a>
+                    <a href="#itinerary"
+                        class="text-gray-600 hover:text-teal-600 transition duration-150 ease-in-out">路线规划</a>
+                    <a href="#contact"
+                        class="text-gray-600 hover:text-teal-600 transition duration-150 ease-in-out">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="flex-grow pt-16 overflow-y-auto">
+        <!-- Hero Section -->
+        <section class="relative h-64 md:h-96 bg-cover bg-center"
+            style="background-image: url('https://images.unsplash.com/photo-1598950968716-f36e7d9c0f27?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white text-center px-4">探索魅力杭州：一日经典游</h1>
+            </div>
+        </section>
+
+        <!-- Itinerary Section -->
+        <section id="itinerary" class="py-12 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-semibold text-center text-gray-800 mb-8">推荐行程</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Attraction Card 1: West Lake -->
+                    <div
+                        class="bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                        <img class="w-full h-48 object-cover"
+                            src="https://images.unsplash.com/photo-1591300680597-093a17d6f8c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+                            alt="西湖">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-2">上午：漫步西湖</h3>
+                            <p class="text-gray-600 text-sm">从断桥残雪出发，沿着白堤或苏堤漫步，欣赏湖光山色，感受"淡妆浓抹总相宜"的诗意。可选择乘船游览三潭印月。</p>
+                            <p class="text-gray-500 text-xs mt-2">建议时长：3-4小时</p>
+                        </div>
+                    </div>
+
+                    <!-- Attraction Card 2: Lingyin Temple -->
+                    <div
+                        class="bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                        <img class="w-full h-48 object-cover"
+                            src="https://images.unsplash.com/photo-1603430498611-03401b1cbb6b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+                            alt="灵隐寺">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-2">下午：灵隐禅踪</h3>
+                            <p class="text-gray-600 text-sm">参观千年古刹灵隐寺，感受佛教文化氛围。飞来峰的石刻造像亦不容错过，环境清幽，适合静心。</p>
+                            <p class="text-gray-500 text-xs mt-2">建议时长：2-3小时</p>
+                        </div>
+                    </div>
+
+                    <!-- Attraction Card 3: Hefang Street -->
+                    <div
+                        class="bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                        <img class="w-full h-48 object-cover"
+                            src="https://images.unsplash.com/photo-1587742268354-9d9a6c1a1f8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+                            alt="河坊街">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-2">傍晚：河坊古街</h3>
+                            <p class="text-gray-600 text-sm">前往充满南宋风情的河坊街，品尝当地特色小吃，购买手工艺品，体验老杭州的市井生活。胡庆余堂等老字号值得一观。</p>
+                            <p class="text-gray-500 text-xs mt-2">建议时长：2小时</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Placeholder Section -->
+        <section class="py-12 bg-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-semibold text-center text-gray-800 mb-8">路线概览</h2>
+                <div
+                    class="bg-white rounded-lg shadow-lg p-4 h-64 md:h-96 flex items-center justify-center text-gray-500">
+                    <!-- 此处未来可集成高德地图 -->
+                    <p>地图加载区域 (需要集成高德地图API)</p>
+                    <div id="map-container" class="w-full h-full"></div> <!-- Map container -->
+                </div>
+                <p class="text-center text-gray-600 mt-4 text-sm">
+                    建议使用公共交通或打车软件连接各景点。<br>
+                    西湖至灵隐寺可乘坐公交 Y2路 或 7路。<br>
+                    灵隐寺至河坊街可乘坐公交 7路 转 地铁1号线。
+                </p>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer id="contact" class="bg-gray-800 text-white py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm">&copy; 2024 杭州印象旅游规划. 保留所有权利.</p>
+            <p class="text-xs mt-1">图片来源: Unsplash</p>
+            <!-- 可以在这里添加联系方式等 -->
+            <div class="mt-2 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white transition">关于我们</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">隐私政策</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 可以添加必要的 JavaScript 文件 -->
+    <!-- 例如，未来集成地图API的脚本 -->
+    <!-- <script src="YOUR_MAP_SCRIPT.js"></script> -->
+
+</body>
+
+</html>
