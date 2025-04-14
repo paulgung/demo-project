@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杭州两天一晚旅行规划表</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c7873;
+            --secondary-color: #52ab98;
+            --accent-color: #f2a365;
+            --light-color: #f7f9fb;
+            --dark-color: #2b3a42;
+            --border-color: #dcdcdc;
+            --grid-gap: 10px;
+            --print-width: 210mm;
+            --print-height: 297mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.5;
+            color: var(--dark-color);
+            background-color: #f0f0f0;
+        }
+
+        /* A4纸样式 */
+        .a4-container {
+            width: var(--print-width);
+            height: var(--print-height);
+            margin: 20px auto;
+            padding: 10mm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* 标题区 */
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--dark-color);
+        }
+
+        /* 网格布局 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            grid-gap: var(--grid-gap);
+            height: calc(100% - 80px);
+        }
+
+        .grid-item {
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 10px;
+            background-color: var(--light-color);
+        }
+
+        .grid-item h2 {
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .grid-item h2 i {
+            margin-right: 8px;
+        }
+
+        /* 第一天行程 */
+        .day1 {
+            grid-column: 1;
+            grid-row: 1 / span 2;
+            overflow: auto;
+        }
+
+        /* 第二天行程 */
+        .day2 {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            overflow: auto;
+        }
+
+        /* 住宿信息 */
+        .accommodation {
+            grid-column: 1;
+            grid-row: 3;
+        }
+
+        /* 实用信息 */
+        .practical-info {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table th,
+        table td {
+            padding: 6px 5px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f0f7f7;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* 活动类型标签 */
+        .tag {
+            display: inline-block;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 11px;
+            color: white;
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+
+        .tag-sight {
+            background-color: var(--primary-color);
+        }
+
+        .tag-food {
+            background-color: var(--accent-color);
+        }
+
+        .tag-transport {
+            background-color: #6c757d;
+        }
+
+        .tag-activity {
+            background-color: var(--secondary-color);
+        }
+
+        /* 列宽控制 */
+        .time-col {
+            width: 70px;
+        }
+
+        .activity-col {
+            width: 28%;
+        }
+
+        .location-col {
+            width: 38%;
+        }
+
+        .details-col {
+            width: 34%;
+        }
+
+        /* 住宿和实用信息样式 */
+        .info-list {
+            list-style-type: none;
+            margin-top: 5px;
+        }
+
+        .info-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            font-size: 13px;
+        }
+
+        .info-list i {
+            width: 20px;
+            color: var(--primary-color);
+            margin-right: 5px;
+            text-align: center;
+        }
+
+        /* 打印按钮 */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .print-btn i {
+            margin-right: 8px;
+        }
+
+        /* 天气信息 */
+        .weather-box {
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            padding: 5px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .weather-icon {
+            font-size: 18px;
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        /* 辅助剪裁线 */
+        .trim-marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .trim-mark {
+            position: absolute;
+            border-style: dashed;
+            border-color: #ccc;
+            border-width: 0;
+        }
+
+        .trim-top {
+            top: 5mm;
+            left: 10mm;
+            right: 10mm;
+            border-top-width: 1px;
+        }
+
+        .trim-bottom {
+            bottom: 5mm;
+            left: 10mm;
+            right: 10mm;
+            border-top-width: 1px;
+        }
+
+        .trim-left {
+            top: 10mm;
+            left: 5mm;
+            bottom: 10mm;
+            border-left-width: 1px;
+        }
+
+        .trim-right {
+            top: 10mm;
+            right: 5mm;
+            bottom: 10mm;
+            border-left-width: 1px;
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background-color: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            .a4-container {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 10mm;
+                box-shadow: none;
+            }
+
+            .print-btn {
+                display: none;
+            }
+
+            .weather-box {
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            table th {
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            .tag {
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="print-btn" onclick="window.print()">
+        <i class="fas fa-print"></i> 打印行程表
+    </button>
+
+    <div class="a4-container">
+        <div class="header">
+            <h1>杭州两天一晚旅行规划表</h1>
+            <div class="header-info">
+                <span><i class="fas fa-calendar-alt"></i> 日期：2025年4月14日-15日</span>
+                <span><i class="fas fa-user"></i> 出行人数：2人</span>
+                <span><i class="fas fa-map-marker-alt"></i> 目的地：浙江省杭州市</span>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <!-- 第一天行程 -->
+            <div class="grid-item day1">
+                <h2><i class="fas fa-calendar-day"></i> 第一天（4月14日 星期一）</h2>
+                <div class="weather-box">
+                    <i class="fas fa-sun weather-icon"></i>
+                    <span>天气：晴 25°C/12°C 西北风 1-3级</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="time-col">时间</th>
+                            <th class="activity-col">活动</th>
+                            <th class="location-col">地点</th>
+                            <th class="details-col">详情</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>08:30-10:30</td>
+                            <td><span class="tag tag-sight">景点</span>西湖断桥-白堤</td>
+                            <td>白堤，从断桥至平湖秋月</td>
+                            <td>免费景点，游览西湖十景之一</td>
+                        </tr>
+                        <tr>
+                            <td>10:30-11:00</td>
+                            <td><span class="tag tag-transport">交通</span>步行</td>
+                            <td>白堤到平湖秋月</td>
+                            <td>约500米，10分钟</td>
+                        </tr>
+                        <tr>
+                            <td>11:00-12:00</td>
+                            <td><span class="tag tag-sight">景点</span>平湖秋月</td>
+                            <td>西湖北侧，孤山路附近</td>
+                            <td>免费景点，观赏西湖美景</td>
+                        </tr>
+                        <tr>
+                            <td>12:00-13:30</td>
+                            <td><span class="tag tag-food">餐饮</span>午餐</td>
+                            <td>楼外楼或湖畔餐厅</td>
+                            <td>品尝杭州特色菜，人均约120元</td>
+                        </tr>
+                        <tr>
+                            <td>13:30-14:00</td>
+                            <td><span class="tag tag-transport">交通</span>出租车</td>
+                            <td>西湖到灵隐寺</td>
+                            <td>约15分钟，车费约25元</td>
+                        </tr>
+                        <tr>
+                            <td>14:00-16:30</td>
+                            <td><span class="tag tag-sight">景点</span>灵隐寺-飞来峰</td>
+                            <td>灵隐路法云弄1号</td>
+                            <td>门票：灵隐寺45元，飞来峰45元</td>
+                        </tr>
+                        <tr>
+                            <td>16:30-17:00</td>
+                            <td><span class="tag tag-transport">交通</span>出租车</td>
+                            <td>灵隐寺到西湖湖畔</td>
+                            <td>约15分钟，车费约25元</td>
+                        </tr>
+                        <tr>
+                            <td>17:00-18:30</td>
+                            <td><span class="tag tag-activity">活动</span>西湖游船</td>
+                            <td>西湖湖心亭码头</td>
+                            <td>55元/人，观赏西湖日落美景</td>
+                        </tr>
+                        <tr>
+                            <td>18:30-20:00</td>
+                            <td><span class="tag tag-food">餐饮</span>晚餐</td>
+                            <td>河坊街或南宋御街</td>
+                            <td>品尝杭帮菜，逛特色小吃街</td>
+                        </tr>
+                        <tr>
+                            <td>20:00-21:30</td>
+                            <td><span class="tag tag-activity">活动</span>夜游西湖</td>
+                            <td>西湖湖畔</td>
+                            <td>欣赏三潭印月夜景</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 第二天行程 -->
+            <div class="grid-item day2">
+                <h2><i class="fas fa-calendar-day"></i> 第二天（4月15日 星期二）</h2>
+                <div class="weather-box">
+                    <i class="fas fa-cloud weather-icon"></i>
+                    <span>天气：多云 26°C/16°C 南风 1-3级</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="time-col">时间</th>
+                            <th class="activity-col">活动</th>
+                            <th class="location-col">地点</th>
+                            <th class="details-col">详情</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>08:30-09:00</td>
+                            <td><span class="tag tag-transport">交通</span>出租车</td>
+                            <td>酒店到雷峰塔</td>
+                            <td>约10分钟，车费约20元</td>
+                        </tr>
+                        <tr>
+                            <td>09:00-10:30</td>
+                            <td><span class="tag tag-sight">景点</span>雷峰塔</td>
+                            <td>南山路15号</td>
+                            <td>门票：40元/人，登塔俯瞰西湖美景</td>
+                        </tr>
+                        <tr>
+                            <td>10:30-11:00</td>
+                            <td><span class="tag tag-transport">交通</span>步行</td>
+                            <td>雷峰塔到苏堤</td>
+                            <td>约800米，15分钟</td>
+                        </tr>
+                        <tr>
+                            <td>11:00-12:00</td>
+                            <td><span class="tag tag-sight">景点</span>苏堤春晓</td>
+                            <td>西湖西侧</td>
+                            <td>免费景点，漫步苏堤，欣赏西湖美景</td>
+                        </tr>
+                        <tr>
+                            <td>12:00-13:30</td>
+                            <td><span class="tag tag-food">餐饮</span>午餐</td>
+                            <td>松鹤楼或知味观</td>
+                            <td>品尝杭州特色菜，人均约100元</td>
+                        </tr>
+                        <tr>
+                            <td>13:30-14:00</td>
+                            <td><span class="tag tag-transport">交通</span>出租车</td>
+                            <td>西湖到宋城景区</td>
+                            <td>约25分钟，车费约40元</td>
+                        </tr>
+                        <tr>
+                            <td>14:00-17:00</td>
+                            <td><span class="tag tag-sight">景点</span>宋城景区</td>
+                            <td>之江路148号</td>
+                            <td>门票：290元/人(含《宋城千古情》演出)</td>
+                        </tr>
+                        <tr>
+                            <td>17:00-18:30</td>
+                            <td><span class="tag tag-activity">活动</span>《宋城千古情》演出</td>
+                            <td>宋城景区内</td>
+                            <td>一票包含在门票内，体验宋朝文化</td>
+                        </tr>
+                        <tr>
+                            <td>18:30-20:00</td>
+                            <td><span class="tag tag-food">餐饮</span>晚餐</td>
+                            <td>宋城景区美食街</td>
+                            <td>品尝宋代风味小吃，人均约80元</td>
+                        </tr>
+                        <tr>
+                            <td>20:00-20:30</td>
+                            <td><span class="tag tag-transport">交通</span>出租车</td>
+                            <td>宋城景区到酒店</td>
+                            <td>约30分钟，车费约45元</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 住宿信息 -->
+            <div class="grid-item accommodation">
+                <h2><i class="fas fa-bed"></i> 住宿信息</h2>
+                <ul class="info-list">
+                    <li><i class="fas fa-hotel"></i><strong>推荐酒店：</strong>如家精选酒店(杭州西湖苏堤虎跑路店)</li>
+                    <li><i class="fas fa-map-marker-alt"></i><strong>地址：</strong>虎跑路四眼井118号(少年儿童公园正对面)</li>
+                    <li><i class="fas fa-phone"></i><strong>电话：</strong>0571-8888XXXX</li>
+                    <li><i class="fas fa-money-bill-wave"></i><strong>价格：</strong>约380元/晚</li>
+                    <li><i class="fas fa-clock"></i><strong>入住时间：</strong>14:00后，退房时间：12:00前</li>
+                    <li><i class="fas fa-map"></i><strong>周边设施：</strong>
+                        <div>
+                            - 距离西湖景区约1.5公里<br>
+                            - 附近有便利店、餐厅<br>
+                            - 步行10分钟可达公交站
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 实用信息 -->
+            <div class="grid-item practical-info">
+                <h2><i class="fas fa-info-circle"></i> 实用信息</h2>
+                <ul class="info-list">
+                    <li><i class="fas fa-umbrella"></i><strong>雨天备选：</strong>
+                        <div>
+                            - 西湖博物馆（免费）<br>
+                            - 杭州历史博物馆（免费）<br>
+                            - 茶叶博物馆（免费）
+                        </div>
+                    </li>
+                    <li><i class="fas fa-bus"></i><strong>交通工具：</strong>
+                        <div>
+                            - 西湖景区环线公交：Y1/Y2路<br>
+                            - 出租车起步价：11元<br>
+                            - 共享单车：遍布市区
+                        </div>
+                    </li>
+                    <li><i class="fas fa-phone-alt"></i><strong>紧急电话：</strong>
+                        <div>
+                            - 旅游咨询：0571-96123<br>
+                            - 报警电话：110<br>
+                            - 医疗急救：120
+                        </div>
+                    </li>
+                    <li><i class="fas fa-wallet"></i><strong>预算估计：</strong>
+                        <div>
+                            - 景点门票：约500元/人<br>
+                            - 餐饮费用：约600元/人<br>
+                            - 住宿费用：约380元/晚<br>
+                            - 交通费用：约300元/人
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="trim-marks">
+            <div class="trim-mark trim-top"></div>
+            <div class="trim-mark trim-bottom"></div>
+            <div class="trim-mark trim-left"></div>
+            <div class="trim-mark trim-right"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 检测是否支持打印
+            if (window.matchMedia) {
+                const mediaQueryList = window.matchMedia('print');
+                mediaQueryList.addListener(function (mql) {
+                    if (mql.matches) {
+                        console.log('开始打印');
+                    } else {
+                        console.log('打印已取消或完成');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        const style = document.createElement('style');
+        style.textContent = `
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    .button-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+    
+    .edgeone-button {
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+        color: #000000;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .edgeone-button:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+    }
+    
+    .button-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+        background: linear-gradient(45deg, #8B5CF6, #D946EF);
+        border-radius: 50%;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .close-button {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 20px;
+        height: 20px;
+        background: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 1001;
+    }
+    
+    .button-container:hover .close-button {
+        opacity: 1;
+    }
+`;
+        document.head.appendChild(style);
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
+        const closeButton = document.createElement('div');
+        closeButton.className = 'close-button';
+        closeButton.textContent = '×';
+
+        const edgeoneButton = document.createElement('button');
+        edgeoneButton.className = 'edgeone-button';
+
+        edgeoneButton.appendChild(document.createTextNode('Powered by EdgeOne Pages'));
+
+        buttonContainer.appendChild(closeButton);
+        buttonContainer.appendChild(edgeoneButton);
+
+        document.body.appendChild(buttonContainer);
+
+        closeButton.addEventListener('click', function (e) {
+            e.stopPropagation();
+            buttonContainer.style.display = 'none';
+        });
+
+        edgeoneButton.addEventListener('click', function () {
+            window.open('https://edgeone.ai/zh/document/160427672992178176', '_blank');
+        });
+
+        (function loadGoogleAnalytics() {
+            const GA_ID = 'G-MBR88GEWNE';
+
+            if (!GA_ID) {
+                console.warn('Google Analytics ID is not defined');
+                return;
+            }
+
+            function createAnalyticsScripts() {
+                const script1 = document.createElement('script');
+                script1.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+                script1.async = true;
+
+                const script2 = document.createElement('script');
+                script2.textContent = 'window.dataLayer = window.dataLayer || [];' +
+                    'function gtag(){dataLayer.push(arguments);}' +
+                    'gtag("js", new Date());' +
+                    'gtag("config", "' + GA_ID + '");';
+
+                try {
+                    document.head.appendChild(script1);
+                    document.head.appendChild(script2);
+                } catch (err) {
+                    console.error('Failed to load Google Analytics:', err);
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', createAnalyticsScripts);
+            } else {
+                createAnalyticsScripts();
+            }
+        })();
+
+    </script>
+</body>
+
+</html>
