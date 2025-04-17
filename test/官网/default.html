@@ -16,7 +16,6 @@
         href="//s.thsi.cn/cb?webprivate/pcnews/css/;grey.min.css;chosen.min.css;jquery.mCustomScrollbar.min.css;userMenu.min.css;;css/master/feedback.min.css;css/home/v4/dkpk_v1.min.css;css/home/v4/;main_v1_9.min.css;parthq.min.css;liejin.min.css;;webprivate/pcnews/css/;recTab_v2.min.css&20170721">
     <link rel="stylesheet" type="text/css" href="//s.thsi.cn/cb?webprivate/pcnews/css/hangqing_v2.css">
     <script src="//s.thsi.cn/cd/ijj-thsi-cn/js/lib/skywalking.1.1.1.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
 
         var backgroundParams = { [Recommend_Controller_Auto_Index_Skin##getAutoSkin()] };
@@ -609,7 +608,7 @@
         <div class="loc-search">
             <div class="input-area">
                 <input id="xuanguInput" class="s-key leb-tip" value="" type="text">
-                <button class="s-btn ta-own-box" id="xuanguBtnV2" data-taid="web_xuangu"
+                <button class="s-btn ta-own-box" id="xuanguBtn" data-taid="web_xuangu"
                     data-fid="web_indexvip">去AI对话</button>
             </div>
             <div class="input-area" style="display:none;">
@@ -643,7 +642,7 @@
                     <dt>大家都在搜：</dt>
                     <ul>
                         <li class="selected">
-                            <a href="#">搜""相关选股</a>
+                            <a href="#">搜“”相关选股</a>
                         </li>
                         {[Recommend_Controller_Newslist##getListView(2943,a:7:{s:3:"num";s:2:"10";s:3:"len";s:2:"40";s:9:"newsctime";s:1:"0";s:8:"timesite";s:1:"0";s:7:"domtoh1";s:0:"";s:16:"fundmarketsuffix";s:1:"0";s:3:"tpl";s:12:"newsblock_v2";},0)]}
                     </ul>
@@ -2480,50 +2479,5 @@
             });
         };
 </script>
-<script>
-        // 模拟获取默认股票代码的异步接口
-        $(document).ready(function () {
-            console.log("正在获取默认股票代码...");
-            
-            // 定义在外部作用域，使blur事件处理器可以访问
-            var defaultStockResponse;
 
-            // 使用setTimeout直接模拟异步请求
-            setTimeout(function () {
-                // 模拟的接口返回数据
-                defaultStockResponse = {
-                    code: 200,
-                    data: {
-                        stockCode: "600000", // 浦发银行的股票代码
-                        stockName: "浦发银行"
-                    },
-                    message: "success"
-                };
-
-                // 设置输入框的默认值
-                $("#search_input").val(defaultStockResponse.data.stockCode);
-                console.log("默认股票代码已设置：" + defaultStockResponse.data.stockCode);
-                
-                // 添加blur事件处理器
-                $("#search_input").blur(function() {
-                    // 如果输入框的值为空，重新设置为默认股票代码
-                    if (!$(this).val().trim()) {
-                        $(this).val(defaultStockResponse.data.stockCode);
-                        console.log("失去焦点时重新设置默认股票代码：" + defaultStockResponse.data.stockCode);
-                    }
-                });
-                
-            }, 1000); // 模拟1秒延迟
-            
-            // 添加点击搜索按钮跳转到百度的事件
-            $("#gp-search").click(function() {
-                window.open("https://www.baidu.com/" + $("#search_input").val(), "_blank");
-            });
-            
-            // 添加xuanguBtnV2、fundBtn、bondsBtn、baikeBtn按钮点击事件，跳转到百度
-            $("#xuanguBtnV2, #fundBtn, #bondsBtn, #baikeBtn").click(function() {
-                window.open("https://www.baidu.com", "_blank");
-            });
-        });
-</script>
 </html>

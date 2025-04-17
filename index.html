@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>财经日历</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', 'SF Pro', 'Helvetica', sans-serif;
+    }
+    
+    .calendar-day {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 510;
+      transition: all 0.2s;
+    }
+    
+    .calendar-day:hover:not(.inactive):not(.selected) {
+      background-color: #f5f5f5;
+      border-radius: 4px;
+    }
+    
+    .selected {
+      background-color: #000;
+      color: white;
+      border-radius: 4px;
+    }
+    
+    .inactive {
+      color: rgba(0, 0, 0, 0.38);
+    }
+    
+    .weekday {
+      width: 40px;
+      text-align: center;
+    }
+    
+    .weekend {
+      color: #9A9A9A;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
+  <div class="w-full max-w-[565px]">
+    <!-- 日历容器 -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <!-- 日历头部 -->
+      <div class="p-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <img src="icons/chevrons-left-1.svg" alt="上一年" class="w-5 h-5 cursor-pointer">
+          <img src="icons/chevron-left.svg" alt="上一月" class="w-5 h-5 cursor-pointer">
+        </div>
+        
+        <h2 class="text-xl font-semibold">Jan 2025</h2>
+        
+        <div class="flex items-center space-x-2">
+          <img src="icons/chevron-right.svg" alt="下一月" class="w-5 h-5 cursor-pointer">
+          <img src="icons/chevrons-right-1.svg" alt="下一年" class="w-5 h-5 cursor-pointer">
+        </div>
+      </div>
+      
+      <!-- 分段选择器 -->
+      <div class="px-4 mb-4">
+        <div class="bg-[#F2F2F2] p-0.5 rounded-md inline-flex">
+          <button class="py-1.5 px-3 rounded-md text-sm font-semibold">Month</button>
+          <button class="py-1.5 px-3 text-sm font-semibold">Week</button>
+          <button class="py-1.5 px-3 w-[63px] rounded-md text-sm font-semibold">Day</button>
+        </div>
+      </div>
+      
+      <!-- 分隔线 -->
+      <div class="border-t border-[#E9E9E9]"></div>
+      
+      <!-- 星期栏 -->
+      <div class="bg-[#F4F4F4] px-4 py-3 flex justify-between">
+        <div class="weekday weekend text-sm">Sun</div>
+        <div class="weekday text-sm">Mon</div>
+        <div class="weekday text-sm">Tue</div>
+        <div class="weekday text-sm">Wed</div>
+        <div class="weekday text-sm">Thu</div>
+        <div class="weekday text-sm">Fri</div>
+        <div class="weekday weekend text-sm">Sat</div>
+      </div>
+      
+      <!-- 日历主体 -->
+      <div class="bg-white p-4">
+        <!-- 第一行（含上个月日期） -->
+        <div class="grid grid-cols-7 gap-2 mb-2">
+          <div class="calendar-day inactive">29</div>
+          <div class="calendar-day inactive">30</div>
+          <div class="calendar-day inactive">31</div>
+          <div class="calendar-day">1</div>
+          <div class="calendar-day">2</div>
+          <div class="calendar-day">3</div>
+          <div class="calendar-day">4</div>
+        </div>
+        
+        <!-- 第二行 -->
+        <div class="grid grid-cols-7 gap-2 mb-2">
+          <div class="calendar-day">5</div>
+          <div class="calendar-day">6</div>
+          <div class="calendar-day">7</div>
+          <div class="calendar-day">8</div>
+          <div class="calendar-day">9</div>
+          <div class="calendar-day">10</div>
+          <div class="calendar-day">11</div>
+        </div>
+        
+        <!-- 第三行（含当前选中日期） -->
+        <div class="grid grid-cols-7 gap-2 mb-2">
+          <div class="calendar-day">12</div>
+          <div class="calendar-day">13</div>
+          <div class="calendar-day">14</div>
+          <div class="calendar-day">15</div>
+          <div class="calendar-day selected">16</div>
+          <div class="calendar-day">17</div>
+          <div class="calendar-day">18</div>
+        </div>
+        
+        <!-- 第四行 -->
+        <div class="grid grid-cols-7 gap-2 mb-2">
+          <div class="calendar-day">19</div>
+          <div class="calendar-day">20</div>
+          <div class="calendar-day">21</div>
+          <div class="calendar-day">22</div>
+          <div class="calendar-day">23</div>
+          <div class="calendar-day">24</div>
+          <div class="calendar-day">25</div>
+        </div>
+        
+        <!-- 第五行（含下个月日期） -->
+        <div class="grid grid-cols-7 gap-2">
+          <div class="calendar-day">26</div>
+          <div class="calendar-day">27</div>
+          <div class="calendar-day">28</div>
+          <div class="calendar-day">29</div>
+          <div class="calendar-day">30</div>
+          <div class="calendar-day">31</div>
+          <div class="calendar-day inactive">1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // 为分段选择器添加交互
+    const segmentButtons = document.querySelectorAll('.bg-[#F2F2F2] button');
+    segmentButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // 移除所有按钮的选中状态
+        segmentButtons.forEach(btn => {
+          btn.classList.remove('bg-white');
+        });
+        // 为当前点击的按钮添加选中状态
+        button.classList.add('bg-white');
+      });
+    });
+    
+    // 默认选择第一个按钮
+    segmentButtons[0].classList.add('bg-white');
+    
+    // 为日历日期添加交互
+    const calendarDays = document.querySelectorAll('.calendar-day:not(.inactive)');
+    calendarDays.forEach(day => {
+      day.addEventListener('click', () => {
+        // 移除所有日期的选中状态
+        calendarDays.forEach(d => {
+          d.classList.remove('selected');
+        });
+        // 为当前点击的日期添加选中状态
+        day.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html> 
