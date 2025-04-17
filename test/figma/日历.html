@@ -52,23 +52,23 @@
   <div class="w-full max-w-[565px]">
     <!-- 日历容器 -->
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-      <!-- 日历头部 -->
-      <div class="p-4 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-          <img src="icons/chevrons-left-1.svg" alt="上一年" class="w-5 h-5 cursor-pointer">
-          <img src="icons/chevron-left.svg" alt="上一月" class="w-5 h-5 cursor-pointer">
+      <!-- 日历头部和分段选择器 -->
+      <div class="p-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center space-x-2">
+            <img src="icons/chevrons-left-1.svg" alt="上一年" class="w-5 h-5 cursor-pointer">
+            <img src="icons/chevron-left.svg" alt="上一月" class="w-5 h-5 cursor-pointer">
+          </div>
+          
+          <h2 class="text-xl font-semibold">Jan 2025</h2>
+          
+          <div class="flex items-center space-x-2">
+            <img src="icons/chevron-right.svg" alt="下一月" class="w-5 h-5 cursor-pointer">
+            <img src="icons/chevrons-right-1.svg" alt="下一年" class="w-5 h-5 cursor-pointer">
+          </div>
         </div>
         
-        <h2 class="text-xl font-semibold">Jan 2025</h2>
-        
-        <div class="flex items-center space-x-2">
-          <img src="icons/chevron-right.svg" alt="下一月" class="w-5 h-5 cursor-pointer">
-          <img src="icons/chevrons-right-1.svg" alt="下一年" class="w-5 h-5 cursor-pointer">
-        </div>
-      </div>
-      
-      <!-- 分段选择器 -->
-      <div class="px-4 mb-4">
+        <!-- 分段选择器 -->
         <div class="bg-[#F2F2F2] p-0.5 rounded-md inline-flex">
           <button class="py-1.5 px-3 rounded-md text-sm font-semibold">Month</button>
           <button class="py-1.5 px-3 text-sm font-semibold">Week</button>
